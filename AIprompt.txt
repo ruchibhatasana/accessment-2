@@ -1,0 +1,5 @@
+Write a MySQL stored procedure named restaurant_monthly_summary that accepts restaurant_id and
+ a month number (1–12) as inputs. It should return total orders, total revenue, and average 
+ order value for that restaurant in the given month. Use SELECT, GROUP BY, and aggregate 
+ functions. If there are no orders for that restaurant and month, return a meaningful message
+ instead of an empty result. The procedure must run successfully in MySQL Workbench.

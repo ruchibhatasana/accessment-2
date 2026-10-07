@@ -1,0 +1,129 @@
+Question1: Justify your constraint choices for at least three columns across two tables.
+          What data integrity problems would arise if these constraints were not applied?
+		  
+ANS:-
+1.Restaurants.restaurant_id – PRIMARY KEY
+It uniquely identifies each restaurant. Without it, two restaurants could have the same ID,
+causing confusion and duplicate records.
+
+2.MenuItems.restaurant_id – FOREIGN KEY
+It links each menu item to a valid restaurant. Without this constraint, menu items could be 
+added for a restaurant that does not exist.
+
+3.MenuItems.item_name – NOT NULL
+Every menu item should have a name. Without NOT NULL, an item could be stored without a name,
+making the menu unclear.
+
+4.Orders.order_id – PRIMARY KEY
+It uniquely identifies each customer order. Without it, orders could be duplicated or 
+difficult to identify.
+
+5.Orders.customer_id – NOT NULL
+Every order should be associated with a customer. Without NOT NULL, an order could exist with
+out knowing who placed it.
+
+
+
+
+
+Question2: Explain why the WHERE clause is essential in each DML statement. What could go 
+wrong with an UPDATE or DELETE executed without a proper WHERE condition?
+
+ANS:-
+The WHERE clause is important because it helps select only the required records for updating or 
+deleting.
+
+1.UPDATE:
+The WHERE clause selects only orders that are more than 7 days old and have 'Pending' status.
+Without it, all orders may be changed to 'Cancelled', including recent or completed orders.
+
+2.DELETE:
+The WHERE clause selects only 'Unavailable' menu items from closed restaurants. Without it,
+all menu items could be permanently deleted.
+
+->Therefore, the WHERE clause helps prevent wrong updates and accidental data loss.
+
+
+
+
+Question3: Which SQL clauses and aggregate functions would you use to produce this report? 
+Explain why HAVING must be used here rather than WHERE to filter by aggregate results .
+
+ANS:-
+I would use the following SQL clauses and aggregate functions:
+
+1.SELECT – to display the restaurant name, total revenue, average order value, and number of 
+orders.
+2.SUM() – to calculate the total revenue.
+3.AVG() – to calculate the average order value.
+4.COUNT() – to count the number of orders.
+5.WHERE – to select only orders from the current month.
+6.GROUP BY – to group the results for each restaurant.
+7.HAVING – to show only restaurants having more than 20 orders.
+
+->Why HAVING instead of WHERE?
+WHERE filters individual rows before grouping, while HAVING filters the results after aggregate 
+functions like COUNT() are calculated. Therefore, HAVING is used to filter restaurants with
+more than 20 orders.
+
+
+
+
+Question4: Compare INNER JOIN and LEFT JOIN for this query. Which would you use and why? 
+Describe what each join type does to records that have no match in the other table.
+
+ANS:-
+1.INNER JOIN: It shows only the orders that have a matching restaurant_id in the restaurants
+  table. If a restaurant is not found, that order will not be displayed.
+  
+2.LEFT JOIN: It shows all orders from the orders table. If an order has no matching restaurant
+  ,the restaurant name will show as NULL.
+
+->I would use LEFT JOIN because the page must display every order, even when the restaurant 
+no longer exists in the restaurants table.
+
+->So, LEFT JOIN is the correct choice for this requirement.
+
+
+
+
+Question5: Justify why a VIEW is preferred over direct table access here. What are two limitations 
+the front-end developer should be aware of when working with this VIEW?
+
+ANS:-
+A VIEW is preferred because it gives the front-end team only the required information, such 
+as restaurant name, total orders, and average rating. It also hides raw ID columns and makes
+the data easier and safer to access.
+
+Two limitations of a VIEW are:
+
+->The front-end developer may have limited ability to update or delete data through the VIEW,
+ especially when it contains calculations or aggregate functions.
+
+->The VIEW depends on the original tables. If the underlying tables or columns are changed, 
+ the VIEW may stop working or show incorrect results.
+
+Therefore, a VIEW provides security, simplicity, and controlled access to the data.
+
+
+
+
+
+Question: Which database mechanism should have prevented this inconsistency? Explain how 
+COMMIT, ROLLBACK, and SAVEPOINT work together to ensure both operations succeed or neither 
+takes effect.
+
+ANS:-
+->The database should use a Transaction to prevent this inconsistency.
+
+1.COMMIT: Saves both the wallet deduction and payment record permanently when both operations
+ are successful.
+
+2.ROLLBACK: If the payment record fails, it cancels the changes made in the transaction , 
+ including the wallet deduction.
+
+3.SAVEPOINT: Creates a temporary point in the transaction. If an error occurs, the system can
+ return to that point using ROLLBACK TO SAVEPOINT.
+
+Therefore, transactions ensure that both operations succeed together or neither operation takes
+ effect, keeping the data consistent.

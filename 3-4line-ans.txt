@@ -1,0 +1,4 @@
+The AI's original procedure calculated total orders, total revenue, and average order value
+correctly. However, it returned an empty result when there were no orders for the selected
+restaurant and month. I improved the procedure by adding a check for zero orders and a meaning
+ful message. I also added month validation so that only values from 1 to 12 are accepted.
